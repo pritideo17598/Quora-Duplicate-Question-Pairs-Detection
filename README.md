@@ -69,8 +69,8 @@ The fuzzywuzzy package offers many different types of ratio as follows:
 </br>
 
 # Models Used
-* 1.Logistic Regression Classification Algorithm
-* 2.Xgboost Algorithm
+* Logistic Regression Classification Algorithm
+* Xgboost Algorithm
 </br>
 
 # Results
