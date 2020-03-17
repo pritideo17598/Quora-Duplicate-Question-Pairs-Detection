@@ -191,38 +191,10 @@ lr_preds = logres.predict(x_test)
 #log_res_accuracy = np.sum(lr_preds == y_val) / len(y_val)
 #print("Logistic regr accuracy: %0.9f" % log_res_accuracy)
 
-"""from sklearn.metrics import confusion_matrix
-cm = confusion_matrix(y_test, lr_preds)
-
-
-from sklearn.metrics import classification_report
-print(classification_report(y_test, lr_preds))"""
-
-"""import matplotlib.pyplot as plt
-from matplotlib.colors import ListedColormap
-x_set , y_set = x_train , y_train 
-X1 , X2 = np.meshgrid(np.arange(start = x_set[:,0].min()-1 , stop = x_set[:,11].max()+1 , step=0.01),
-                      np.arange(start = x_set[:,12].min()-1 , stop = x_set[:,21].max()+1 , step=0.01))
-plt.contourf(X1, X2, logres.predict(np.array([X1.ravel() , X2.ravel()]).T).reshape(X1.shape),
-             alpha=0.75, cmap=ListedColormap(('red','gren'))) 
-plt.xlim(X1.min(), X1.max())
-plt.ylim(X2.min(), X2.max())        
-for i,j in enumerate(np.unique(y_set)):
-    plt.scatter(x_set[y_set == j,0], x_set[y_set == j,1], 
-                c = ListedColormap(('red','green'))(i), label = j)   
-plt.title('Logistic Regression (Training set)')
-plt.xlabel('question1')
-plt.ylabel('question2')          
-plt.legend()
-plt.show()     """ 
-       
 
 from sklearn.metrics import confusion_matrix
 cm = confusion_matrix(y_test, lr_preds)
 
-
-#from sklearn.metrics import classification_report
-#print(classification_report(y_test, xgb_preds))
 
 
 
