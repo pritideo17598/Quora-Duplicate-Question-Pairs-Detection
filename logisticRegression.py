@@ -77,68 +77,9 @@ fs_2 = ['fuzz_qratio', 'fuzz_WRatio', 'fuzz_partial_ratio',
        'fuzz_token_set_ratio', 'fuzz_token_sort_ratio']  #list
 
 
-#from sklearn.feature_extraction.text import TfidfVectorizer
-#from copy import deepcopy
-
-#tfv_q1 = TfidfVectorizer(min_df=3, 
-#max_features=None, 
-#strip_accents='unicode', 
-#analyzer='word', 
-#token_pattern=r'w{1,}',
-#ngram_range=(1, 2), 
-#use_idf=1, 
-#smooth_idf=1, 
-#sublinear_tf=1,
-#stop_words='english')
-#print tfv_q1
-#tfv_q2 = deepcopy(tfv_q1)
-
-
-
-
-#q1_tfidf = tfv_q1.fit_transform(data.question1.fillna(""))
-#print q1_tfidf
-#q2_tfidf = tfv_q2.fit_transform(data.question2.fillna(""))
-
-
-#from sklearn.decomposition import TruncatedSVD
-#svd_q1 = TruncatedSVD(n_components=180)
-#svd_q2 = TruncatedSVD(n_components=180)
-
-#question1_vectors = svd_q1.fit_transform(q1_tfidf)
-#question2_vectors = svd_q2.fit_transform(q2_tfidf)
-
-#from scipy import sparse
-# obtain features by stacking the sparse matrices together
-#fs3_1 = sparse.hstack((q1_tfidf, q2_tfidf))
-
-
-#tfv = TfidfVectorizer(min_df=3, 
-                 #    strip_accents='unicode', 
-                  #    analyzer='word', 
-                  #    token_pattern=r'w{1,}',
-                   #   ngram_range=(1, 2), 
-                   #   use_idf=1, 
-                   #   smooth_idf=1, 
-                   #   sublinear_tf=1,
-                   #   stop_words='english')
-               
-# combine questions and calculate tf-idf
-#q1q2 = data.question1.fillna("") 
-#q1q2 += " " + data.question2.fillna("")
-#fs3_2 = tfv.fit_transform(q1q2)
-
-# obtain features by stacking the matrices together
-#fs3_3 = np.hstack((question1_vectors, question2_vectors)) 
-
 import gensim
 model = gensim.models.KeyedVectors.load_word2vec_format(
 'GoogleNews-vectors-negative300.bin', binary=True,limit=500000)
-#print model["love"].shape
-
-#import nltk
-#nltk.download('punkt')
-#nltk.download('stopwords')
 
 from nltk.corpus import stopwords
 #from nltk import word_tokenize
@@ -168,10 +109,7 @@ def sent2vec(s, model):
     else:
         return np.zeros(300)  #1*300
         
-#sent2vec("When do you use シ instead of し?",model)
-#import sys
-#reload(sys)
-#sys.setdefaultencoding('utf8')
+
 w2v_q1 = np.array([sent2vec(q, model) for q in data.question1])
 w2v_q2 = np.array([sent2vec(q, model) for q in data.question2])
 
@@ -190,30 +128,11 @@ fs4_1 = ['cosine_distance', 'cityblock_distance',
          'jaccard_distance', 'canberra_distance', 
          'euclidean_distance', 'minkowski_distance',
          'braycurtis_distance']
-         
-#w2v = np.hstack((w2v_q1, w2v_q2))
-         
-#def wmd(s1, s2, model):
-#    s1 = str(s1).lower().split()
-#    s2 = str(s2).lower().split()
-#    stop_words = stopwords.words('english')
-#    s1 = [w for w in s1 if w not in stop_words]
-#    s2 = [w for w in s2 if w not in stop_words]
-#    return model.wmdistance(s1, s2)         
-    
-    
-#data['wmd'] = data.apply(lambda x: wmd(x['question1'],x['question2'], model), axis=1)
-#model.init_sims(replace=True) 
-#data['norm_wmd'] = data.apply(lambda x: wmd(x['question1'],x['question2'], model), axis=1)
-
-#fs4_2 = ['wmd', 'norm_wmd']  
 
 
 import gc
 import psutil
-#del([tfv_q1, tfv_q2, tfv, q1q2, q1_tfidf, q2_tfidf])
 del([w2v_q1, w2v_q2])
-#del([model])
 gc.collect()
 psutil.virtual_memory()  
 
